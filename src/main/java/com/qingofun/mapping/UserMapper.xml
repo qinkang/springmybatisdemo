@@ -79,4 +79,55 @@
       age = #{age,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 获取所有User -->
+  <select id="queryAllUsers" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_t
+  </select>
+  <!-- 获取所有User -->
+  <select id="queryAllUsers1" resultType="HashMap">
+    select
+      *
+    from user_t
+  </select>
+  <!-- 获取所有User -->
+  <select id="queryAllUsers2" resultType="com.qingofun.pojo.res.UserRes">
+    select
+    *
+    from user_t
+  </select>
+
+  <!-- 动态条件 -->
+  <sql id="dynamicPageWhere">
+    <if test="userName !='' and userName !=null">
+      and user_name=#{userName, jdbcType=VARCHAR}
+    </if>
+
+    <if test="age !='' and age !=null">
+      and age=#{age,jdbcType=INTEGER}
+    </if>
+
+    <if test="password !='' and password !=null">
+      and password like CONCAT('%',#{password,jdbcType=VARCHAR},'%')
+    </if>
+
+  </sql>
+  <!-- 条件查询User -->
+  <select id="queryUsersByCre" resultType="HashMap">
+    select
+    *
+    from user_t where 1=1
+    <include refid="dynamicPageWhere"/>
+  </select>
+  <!-- 条件查询User -->
+  <select id="queryUsersByCre1" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_t where 1=1
+    <include refid="dynamicPageWhere"/>
+  </select>
+
+
 </mapper>

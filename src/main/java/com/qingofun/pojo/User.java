@@ -1,9 +1,6 @@
 package com.qingofun.pojo;
 
 public class User {
-    public User() {
-
-    }
 
     private Integer id;
 

@@ -7,18 +7,51 @@
      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <mvc:annotation-driven
-            content-negotiation-manager="contentNegotiationManager" />
-    <bean id="contentNegotiationManager"
-          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-        <property name="favorPathExtension" value="false" />
-        <property name="favorParameter" value="false" />
-        <property name="ignoreAcceptHeader" value="false" />
-        <property name="mediaTypes">
+    <!-- 自动扫描controller包下的所有类，组件扫描器：可以扫描@Controller、@Service、@Repository等等 -->
+    <context:component-scan base-package="com.qingofun" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 默认的注解映射的支持，
+    自动加载org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+     org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter-->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+            <!-- 将Jackson2HttpMessageConverter的默认格式化输出为true -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value><!-- 避免IE出现下载JSON文件的情况 -->
+                    </list>
+                </property>
+                <!-- 全局日期类型格式化，解决日期为long的问题 -->
+                <property name="objectMapper">
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="dateFormat">
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="mediaTypes" >
             <map>
+                <entry key="xml" value="application/xml"/>
                 <entry key="json" value="application/json"/>
             </map>
         </property>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="favorPathExtension" value="true"/>
     </bean>
 
     <!-- 扫描web包，应用Spring的注解 -->
@@ -37,10 +70,6 @@
         </mvc:message-converters>
     </mvc:annotation-driven>-->
 
-    <context:component-scan base-package="com.qingofun" use-default-filters="false">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
 
     <!-- 视图解析器，根据视图的名称new ModelAndView(name)，在配置文件查找对应的bean配置 -->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
@@ -57,4 +86,19 @@
           class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
     </bean>
 
+    <!-- 对静态资源文件的访问 -->
+    <mvc:resources location="/static/" mapping="/static/**"/>
+
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="10485760000"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
+    <!-- testing 非注解方式 此处为HandlerMapping的配置。
+    前端控制器会去找处理器映射器(HandlerMapping)，处理器映射器根据请求url找到具体的处理器(Handler或者叫做Controller)，
+    生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet 。-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+    <bean name="/items1" id="itemList1" class="com.qingofun.controller.ItemsController1" />
 </beans>
