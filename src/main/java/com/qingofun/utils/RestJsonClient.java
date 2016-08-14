@@ -15,31 +15,32 @@ import java.util.Map;
 public class RestJsonClient {
     static RestTemplate restTemplate;
     static HttpHeaders headers = new HttpHeaders();
+
     static {
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setExpires(1000*5);
+        headers.setExpires(1000 * 5);
         ClientHttpRequestFactory clientHttpRequestFactory = new MyCustomClientHttpRequestFactory();
         restTemplate = new RestTemplate(clientHttpRequestFactory);
     }
 
-    public static <T,V> T postForEntity(V v, String url, Class<T> c) {
+    public static <T, V> T postForEntity(V v, String url, Class<T> c) {
         HttpEntity<V> entity = new HttpEntity<V>(v, headers);
-        ResponseEntity<T> responseEntity = restTemplate.postForEntity(url,entity,c);
+        ResponseEntity<T> responseEntity = restTemplate.postForEntity(url, entity, c);
         return responseEntity.getBody();
     }
 
-    public static <T,V> T postForObject(V v,  String url, Class<T> c) {
+    public static <T, V> T postForObject(V v, String url, Class<T> c) {
         HttpEntity<V> entity = new HttpEntity<V>(v, headers);
         return restTemplate.postForObject(url, entity, c);
     }
 
-    public static <T,V> T getForEntity(V v, String url, Class<T> c) {
-        ResponseEntity<T> responseEntity = restTemplate.getForEntity(url,c,v);
+    public static <T, V> T getForEntity(V v, String url, Class<T> c) {
+        ResponseEntity<T> responseEntity = restTemplate.getForEntity(url, c, v);
         return responseEntity.getBody();
     }
 
     public static <T> T getForEntity(String url, Class<T> c, Map<String, Object> map) {
-        ResponseEntity<T> responseEntity =  restTemplate.getForEntity(url, c, map);
+        ResponseEntity<T> responseEntity = restTemplate.getForEntity(url, c, map);
         return responseEntity.getBody();
     }
 

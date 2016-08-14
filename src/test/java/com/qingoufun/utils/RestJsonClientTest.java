@@ -85,7 +85,7 @@ public class RestJsonClientTest {
     @Test
     public void testGetForEntity2() {
 
-        String url = "http://localhost:8080/product-admin-web/notice/fail/list" ;
+        String url = "http://localhost:8080/product-admin-web/notice/fail/list";
         String response = RestJsonClient.getForObject(url, String.class);
         System.out.println(response);
 

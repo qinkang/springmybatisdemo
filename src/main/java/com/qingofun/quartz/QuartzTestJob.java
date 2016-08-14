@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public class QuartzTestJob {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private long count = 0;
+
     public void executeJob() {
         try {
             Thread.sleep(1000L);

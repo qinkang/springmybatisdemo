@@ -14,35 +14,38 @@ import java.util.Map;
 public class JsonUtil {
     /**
      * 将json字符串转换成泛型的对象
-     * @param jsonString  json字符串
-     * @param c 泛型的对象
+     *
+     * @param jsonString json字符串
+     * @param c          泛型的对象
      * @return 泛型的对象
      * @throws ClassCastException
      * @author
      * @date
      */
-    public static <T> T jsonStringToObject(String jsonString, Class<T> c){
+    public static <T> T jsonStringToObject(String jsonString, Class<T> c) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            return (T)mapper.readValue(jsonString, c);
+            return (T) mapper.readValue(jsonString, c);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
     /**
      * 将json字符串转换成泛型的集合对象
-     * @param jsonString json字符串
+     *
+     * @param jsonString      json字符串
      * @param collectionClass 泛型的Collection
-     * @param elementClasses 元素类
+     * @param elementClasses  元素类
+     * @param <T>
      * @return
      * @author
-     * @param <T>
      * @date
      */
     @SuppressWarnings("unchecked")
-    public static  <T> T jsonStringToCollection(String jsonString,Class<T> collectionClass, Class<?>... elementClasses){
+    public static <T> T jsonStringToCollection(String jsonString, Class<T> collectionClass, Class<?>... elementClasses) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -53,18 +56,18 @@ public class JsonUtil {
             return null;
         }
     }
+
     /**
-     *
-     * @param obj Object
+     * @param obj             Object
      * @param isEnableFeature
      * @return
      */
-    public static String objectToJsonString(Object obj,boolean isEnableFeature){
+    public static String objectToJsonString(Object obj, boolean isEnableFeature) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            if(isEnableFeature){
+            if (isEnableFeature) {
                 mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            }else{
+            } else {
                 mapper.disable(SerializationFeature.INDENT_OUTPUT);
             }
             return mapper.writeValueAsString(obj);
@@ -73,14 +76,16 @@ public class JsonUtil {
             return null;
         }
     }
+
     /**
      * 将对象转换成json字符串
+     *
      * @param obj Object
      * @return String
      * @author
      * @date
      */
-    public static String objectToJsonString(Object obj){
+    public static String objectToJsonString(Object obj) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.disable(SerializationFeature.INDENT_OUTPUT);
@@ -90,8 +95,9 @@ public class JsonUtil {
             return null;
         }
     }
+
     @SuppressWarnings("unchecked")
-    public static Map<String,Object> objectToMap(Object obj){
+    public static Map<String, Object> objectToMap(Object obj) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.disable(SerializationFeature.INDENT_OUTPUT);
@@ -103,8 +109,9 @@ public class JsonUtil {
             return null;
         }
     }
+
     @SuppressWarnings("unchecked")
-    public static  <T> T objectToCollection(Object obj,Class<T> collectionClass, Class<?>... elementClasses){
+    public static <T> T objectToCollection(Object obj, Class<T> collectionClass, Class<?>... elementClasses) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -117,8 +124,7 @@ public class JsonUtil {
     }
 
 
-
-    public static <T> T mapToObject(Map<String,?> map,Class<T> c){
+    public static <T> T mapToObject(Map<String, ?> map, Class<T> c) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.disable(SerializationFeature.INDENT_OUTPUT);
@@ -130,7 +136,7 @@ public class JsonUtil {
         }
     }
 
-    public static String mapToJson(Map<String,?> map){
+    public static String mapToJson(Map<String, ?> map) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(map);

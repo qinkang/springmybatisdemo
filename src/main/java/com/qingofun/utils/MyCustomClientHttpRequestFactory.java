@@ -25,22 +25,26 @@ public class MyCustomClientHttpRequestFactory extends SimpleClientHttpRequestFac
     private final HostnameVerifier hostNameVerifier;
 
 
-    public MyCustomClientHttpRequestFactory (final HostnameVerifier hostNameVerifier) {
+    public MyCustomClientHttpRequestFactory(final HostnameVerifier hostNameVerifier) {
         this.hostNameVerifier = hostNameVerifier;
     }
-    public MyCustomClientHttpRequestFactory () {
+
+    public MyCustomClientHttpRequestFactory() {
         this.hostNameVerifier = SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
     }
+
     //10.100.140.85:1080
-    public MyCustomClientHttpRequestFactory (String proxyHost,int proxyPort) {
+    public MyCustomClientHttpRequestFactory(String proxyHost, int proxyPort) {
         this();
         Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(proxyHost, proxyPort));
         super.setProxy(proxy);
     }
-    public MyCustomClientHttpRequestFactory (Proxy proxy) {
+
+    public MyCustomClientHttpRequestFactory(Proxy proxy) {
         this();
         super.setProxy(proxy);
     }
+
     @Override
     protected void prepareConnection(final HttpURLConnection connection, final String httpMethod)
             throws IOException {
@@ -53,7 +57,7 @@ public class MyCustomClientHttpRequestFactory extends SimpleClientHttpRequestFac
     }
 
     private SSLContext initSSLContext() {
-        SSLContext sslcontext=null;
+        SSLContext sslcontext = null;
         try {
             sslcontext = SSLContext.getInstance(SSLSocketFactory.SSL);
             sslcontext.init(null, new TrustManager[]{new TrustAnyTrustManager()}, new java.security.SecureRandom());
@@ -64,6 +68,7 @@ public class MyCustomClientHttpRequestFactory extends SimpleClientHttpRequestFac
         }
         return sslcontext;
     }
+
     //自定义私有类
     private static class TrustAnyTrustManager implements X509TrustManager {
 

@@ -5,13 +5,15 @@ import java.io.Serializable;
 /**
  * Created by qinkang on 16/6/28.
  */
-public class RequestJsonVO implements Serializable{
+public class RequestJsonVO implements Serializable {
     private String sign;
     private String data;
     private String merchant_id;
-    public RequestJsonVO(){
+
+    public RequestJsonVO() {
     }
-    public RequestJsonVO(String sign,String data,String merchantId){
+
+    public RequestJsonVO(String sign, String data, String merchantId) {
         this.sign = sign;
         this.data = data;
         this.merchant_id = merchantId;

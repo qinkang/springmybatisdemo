@@ -11,13 +11,15 @@ public class ResponseJsonVo {
     private String data;
     private String merchant_id;
 
-    public ResponseJsonVo(){
+    public ResponseJsonVo() {
     }
-    public ResponseJsonVo(String msgCode,String msgDes){
+
+    public ResponseJsonVo(String msgCode, String msgDes) {
         this.msgCode = msgCode;
         this.msgDes = msgDes;
     }
-    public ResponseJsonVo(String msgCode,String msgDes,String sign,String data,String merchantId){
+
+    public ResponseJsonVo(String msgCode, String msgDes, String sign, String data, String merchantId) {
         this.msgCode = msgCode;
         this.msgDes = msgDes;
         this.sign = sign;

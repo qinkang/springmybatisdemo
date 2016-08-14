@@ -19,7 +19,7 @@
         <mvc:message-converters register-defaults="true">
             <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <constructor-arg value="UTF-8" />
+                <constructor-arg value="UTF-8"/>
             </bean>
             <!-- 将Jackson2HttpMessageConverter的默认格式化输出为true -->
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -34,7 +34,7 @@
                     <bean class="com.fasterxml.jackson.databind.ObjectMapper">
                         <property name="dateFormat">
                             <bean class="java.text.SimpleDateFormat">
-                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
                             </bean>
                         </property>
                     </bean>
@@ -44,7 +44,7 @@
     </mvc:annotation-driven>
     <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-        <property name="mediaTypes" >
+        <property name="mediaTypes">
             <map>
                 <entry key="xml" value="application/xml"/>
                 <entry key="json" value="application/json"/>
@@ -73,13 +73,13 @@
 
     <!-- 视图解析器，根据视图的名称new ModelAndView(name)，在配置文件查找对应的bean配置 -->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-        <property name="order" value="3" />
+        <property name="order" value="3"/>
     </bean>
 
     <!-- 对模型视图名称的解析，在请求时模型视图名称添加前后缀 -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+          p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
 
     <!-- json视图，XStreamMarshaller，可以转换任何形式的java对象 -->
     <bean name="xStreamMappingJackson2JsonView"
@@ -99,6 +99,6 @@
     <!-- testing 非注解方式 此处为HandlerMapping的配置。
     前端控制器会去找处理器映射器(HandlerMapping)，处理器映射器根据请求url找到具体的处理器(Handler或者叫做Controller)，
     生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet 。-->
-    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
-    <bean name="/items1" id="itemList1" class="com.qingofun.controller.ItemsController1" />
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+    <bean name="/items1" id="itemList1" class="com.qingofun.controller.ItemsController1"/>
 </beans>

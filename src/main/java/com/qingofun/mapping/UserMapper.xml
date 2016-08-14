@@ -1,133 +1,133 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.qingofun.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.qingofun.pojo.User" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="age" property="age" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_name, password, age
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from user_t
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user_t
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.qingofun.pojo.User" >
-    insert into user_t (id, user_name, password, 
-      age)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.qingofun.pojo.User" >
-    insert into user_t
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="password != null" >
-        password,
-      </if>
-      <if test="age != null" >
-        age,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="age != null" >
-        #{age,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qingofun.pojo.User" >
-    update user_t
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
+<mapper namespace="com.qingofun.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.qingofun.pojo.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_name, password, age
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_t
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from user_t
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.qingofun.pojo.User">
+        insert into user_t (id, user_name, password,
+        age)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.qingofun.pojo.User">
+        insert into user_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.qingofun.pojo.User">
+        update user_t
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.qingofun.pojo.User">
+        update user_t
+        set user_name = #{userName,jdbcType=VARCHAR},
         password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="age != null" >
-        age = #{age,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.qingofun.pojo.User" >
-    update user_t
-    set user_name = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        age = #{age,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-  <!-- 获取所有User -->
-  <select id="queryAllUsers" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_t
-  </select>
-  <!-- 获取所有User -->
-  <select id="queryAllUsers1" resultType="HashMap">
-    select
-      *
-    from user_t
-  </select>
-  <!-- 获取所有User -->
-  <select id="queryAllUsers2" resultType="com.qingofun.pojo.res.UserRes">
-    select
-    *
-    from user_t
-  </select>
+    <!-- 获取所有User -->
+    <select id="queryAllUsers" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_t
+    </select>
+    <!-- 获取所有User -->
+    <select id="queryAllUsers1" resultType="HashMap">
+        select
+        *
+        from user_t
+    </select>
+    <!-- 获取所有User -->
+    <select id="queryAllUsers2" resultType="com.qingofun.pojo.res.UserRes">
+        select
+        *
+        from user_t
+    </select>
 
-  <!-- 动态条件 -->
-  <sql id="dynamicPageWhere">
-    <if test="userName !='' and userName !=null">
-      and user_name=#{userName, jdbcType=VARCHAR}
-    </if>
+    <!-- 动态条件 -->
+    <sql id="dynamicPageWhere">
+        <if test="userName !='' and userName !=null">
+            and user_name=#{userName, jdbcType=VARCHAR}
+        </if>
 
-    <if test="age !='' and age !=null">
-      and age=#{age,jdbcType=INTEGER}
-    </if>
+        <if test="age !='' and age !=null">
+            and age=#{age,jdbcType=INTEGER}
+        </if>
 
-    <if test="password !='' and password !=null">
-      and password like CONCAT('%',#{password,jdbcType=VARCHAR},'%')
-    </if>
+        <if test="password !='' and password !=null">
+            and password like CONCAT('%',#{password,jdbcType=VARCHAR},'%')
+        </if>
 
-  </sql>
-  <!-- 条件查询User -->
-  <select id="queryUsersByCre" resultType="HashMap">
-    select
-    *
-    from user_t where 1=1
-    <include refid="dynamicPageWhere"/>
-  </select>
-  <!-- 条件查询User -->
-  <select id="queryUsersByCre1" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from user_t where 1=1
-    <include refid="dynamicPageWhere"/>
-  </select>
+    </sql>
+    <!-- 条件查询User -->
+    <select id="queryUsersByCre" resultType="HashMap">
+        select
+        *
+        from user_t where 1=1
+        <include refid="dynamicPageWhere"/>
+    </select>
+    <!-- 条件查询User -->
+    <select id="queryUsersByCre1" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_t where 1=1
+        <include refid="dynamicPageWhere"/>
+    </select>
 
 
 </mapper>
